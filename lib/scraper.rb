@@ -34,14 +34,13 @@ class Scraper
           linkedin = social_media[1]
         elsif social_media[1].include?("github")
           github = social_media[1]
+        else
+          blog = social_media[1]
         end
-      #binding.pry
       end
     end
-  
-    student_info = {twitter: twitter, linkedin: linkedin, github: github, blog: blog, quote: quote}
+    student_info = {twitter: twitter, linkedin: linkedin, github: github, blog: blog, profile_quote: quote, bio: bio}
     student_info
-    binding.pry
   end
   
 
