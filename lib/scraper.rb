@@ -19,11 +19,11 @@ class Scraper
   
   def self.scrape_profile_page(profile_url)
     page = Nokogiri::HTML(open(profile_url))
-    twitter =
-    linkedin =
-    github = 
-    blog = 
-    quote = page.css(".profile-quote").text
+    twitter = ""
+    linkedin = ""
+    github = ""
+    blog = ""
+    quote = page.css(".main-wrapper.profile .vitals-container .vitals-text-container .profile-quote").text
     bio = page.css(".details-container .bio-block.details-block p").text
     
     page.css(".social-icon-container a").each do |all_social_media|
@@ -35,15 +35,13 @@ class Scraper
         elsif social_media[1].include?("github")
           github = social_media[1]
         end
-      binding.pry
+      #binding.pry
       end
     end
-    
-    
-    
-    
+  
     student_info = {twitter: twitter, linkedin: linkedin, github: github, blog: blog, quote: quote}
     student_info
+    binding.pry
   end
   
 
