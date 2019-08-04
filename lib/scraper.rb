@@ -18,28 +18,28 @@ class Scraper
   
   
   def self.scrape_profile_page(profile_url)
-    page = Nokogiri::HTML(open(profile_url))
-    twitter = ""
-    linkedin = ""
-    github = ""
-    blog = ""
-    quote = page.css(".main-wrapper.profile .vitals-container .vitals-text-container .profile-quote").text
-    bio = page.css(".details-container .bio-block.details-block p").text
+    student_info = {}
     
+    page = Nokogiri::HTML(open(profile_url))
+   
+    student_info[:profile_quote] = page.css(".main-wrapper.profile .vitals-container .vitals-text-container .profile-quote").text
+    student_info[:bio] = page.css(".details-container .bio-block.details-block p").text
+    
+    #iterates through social media links and adds any to hash
+    #if student doesn't have a link to that platform, the key does not exist in student's hash
     page.css(".social-icon-container a").each do |all_social_media|
       all_social_media.each do |social_media|
         if social_media[1].include?("twitter")
-          twitter = social_media[1]
+          student_info[:twitter] = social_media[1]
         elsif social_media[1].include?("linkedin")
-          linkedin = social_media[1]
+          student_info[:linkedin] = social_media[1]
         elsif social_media[1].include?("github")
-          github = social_media[1]
+          student_info[:github] = social_media[1]
         else
-          blog = social_media[1]
+          student_info[:blog] = social_media[1]
         end
       end
     end
-    student_info = {twitter: twitter, linkedin: linkedin, github: github, blog: blog, profile_quote: quote, bio: bio}
     student_info
   end
   
